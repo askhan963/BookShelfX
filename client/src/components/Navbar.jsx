@@ -7,6 +7,14 @@ import AvatarImg from '../assets/avatar.png'
 const Navbar = () => {
     const currentUser = true;
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const navigation = [
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Orders', href: '/orders' },
+  { name: 'Cart Page', href: '/cart' },
+  { name: 'Checkout', href: '/checkout' },
+]
+
+
   return (
     <header className='max-w-screen-2xl mx-auto px-4 py-6'>
       <nav className='flex justify-between items-center'>
@@ -37,6 +45,24 @@ const Navbar = () => {
                     }`}
                     />
                    </button>
+                   {/* Show Dropdown */}
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-52 w-48 bg-white shadow-lg rounded-md z-40">
+                  <ul className="py-2">
+                    {navigation.map((item) => (
+                      <li key={item.name}>
+                        <Link
+                          to={item.href}
+                          onClick={() => setIsDropdownOpen(false)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-secondary transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
                    </>
                 ) : (
                     <Link to={'/login'}>
