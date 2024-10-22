@@ -5,7 +5,7 @@ import { HiOutlineUser , HiOutlineHeart } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import AvatarImg from '../assets/avatar.png'
 const Navbar = () => {
-    const currentUser = true;
+    const currentUser = false;
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
