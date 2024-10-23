@@ -2,10 +2,14 @@ import React from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import getUrlImg from '../../utils/getImgUrl';
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/cart/cartSlice';
 const BookCard = ({ book }) => {
-  const maxDescriptionLength = 80; // Max length for the description
-
+  const  dispatch = useDispatch(); 
+    const maxDescriptionLength = 80; // Max length for the description
+const handleAddToCart = (book) => {
+  dispatch(addToCart(book));
+}
   // Helper function to truncate the description
   const truncateDescription = (description) => {
     if (!description) return ''; // Handle null or undefined descriptions
@@ -42,7 +46,9 @@ const BookCard = ({ book }) => {
               ${book.oldPrice}
             </span>
           </p>
-          <button className="btn-primary px-6 space-x-1 flex items-center gap-1">
+          <button 
+          onClick={() => handleAddToCart(book)}
+          className="btn-primary px-6 space-x-1 flex items-center gap-1">
             <FiShoppingCart />
             <span>Add to Cart</span>
           </button>
