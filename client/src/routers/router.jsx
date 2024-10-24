@@ -4,6 +4,7 @@ import Home from "../pages/home/Home";
 import Singin from "../components/Singin";
 import SignUp from "../components/SignUp";
 import CartPage from "../pages/Books/CartPage";
+import CheckOutPage from "../pages/Books/CheckOutPage";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <Singin/>
+            },
+            {
+                path: '/checkout',
+                element: <CheckOutPage/>
             },
             {
                 path: 'register',
