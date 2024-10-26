@@ -8,15 +8,9 @@ import { Navigation,Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useFetchAllBooksQuery } from '../../redux/books/bookApi';
 const RecommendedBooks = () => {
-  const [books, setBooks] = useState([]); 
- // Fetch books data when component mounts
- useEffect(() => {
-    fetch('/data/blog.json') // Ensure the correct path to the JSON file
-      .then((res) => res.json())
-      .then((data) => setBooks(data)) // Save the fetched data to the books state
-      .catch((err) => console.error('Error fetching books:', err)); // Add error handling
-  }, []);
+  const { data : books = []} = useFetchAllBooksQuery()
   return (
     <div>
       <h2 className='text-3xl font-semibold mb-5'>Recommended Books</h2>

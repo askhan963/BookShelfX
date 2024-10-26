@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BookCard from '../Books/BookCard';
+import {useFetchAllBooksQuery} from '../../redux/books/bookApi'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
@@ -11,17 +12,9 @@ import 'swiper/css/navigation';
 const categories = ["Choose a genre", "business", "fiction", "horror", "adventure", "non-fiction"];
 
 const TopSelling = () => {
-  const [books, setBooks] = useState([]); 
   const [selectedCate, setSelectedCate] = useState("Choose a genre"); // Fix useEffect to useState for managing category
 
-  // Fetch books data when component mounts
-  useEffect(() => {
-    fetch('/data/blog.json') // Ensure the correct path to the JSON file
-      .then((res) => res.json())
-      .then((data) => setBooks(data)) // Save the fetched data to the books state
-      .catch((err) => console.error('Error fetching books:', err)); // Add error handling
-  }, []);
-
+  const { data : books = []} = useFetchAllBooksQuery()
   // Filter books based on the selected category
   const filteredBooks = selectedCate === "Choose a genre"
     ? books
