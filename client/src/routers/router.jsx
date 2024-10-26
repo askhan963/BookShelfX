@@ -5,6 +5,7 @@ import Singin from "../components/Singin";
 import SignUp from "../components/SignUp";
 import CartPage from "../pages/Books/CartPage";
 import CheckOutPage from "../pages/Books/CheckOutPage";
+import PrivateRoute from "./PrivateRoutes";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -36,7 +37,9 @@ const router = createBrowserRouter([
             },
             {
                 path: '/checkout',
-                element: <CheckOutPage/>
+                element: <PrivateRoute>
+                    <CheckOutPage/>
+                </PrivateRoute>
             },
             {
                 path: 'register',
