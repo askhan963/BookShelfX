@@ -13,7 +13,7 @@ connectDB();
 // calling middlware
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3000",
+  origin: ["https://bookshelfx.netlify.app",
     "http://localhost:5173"
   ],
   credentials: true
