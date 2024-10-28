@@ -13,15 +13,14 @@ const getBooks = async (req, res) => {
 
 // Create a new book controller
 const createBook = async (req, res) => {
-    const { title, author, description, category, trending, coverImage, oldPrice, newPrice } = req.body;
+    const { title ,description, category, trending, coverImage, oldPrice, newPrice } = req.body;
 
     if (!title || !author) {
-        return res.status(400).json({ message: "Title and author are required" });
+        return res.status(400).json({ message: "Title is required" });
     }
 
     const book = new Book({
         title,
-        author,
         description,
         category,
         trending,
