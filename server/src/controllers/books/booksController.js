@@ -13,27 +13,13 @@ const getBooks = async (req, res) => {
 
 // Create a new book controller
 const createBook = async (req, res) => {
-    const { title ,description, category, trending, coverImage, oldPrice, newPrice } = req.body;
-
-    if (!title || !author) {
-        return res.status(400).json({ message: "Title is required" });
-    }
-
-    const book = new Book({
-        title,
-        description,
-        category,
-        trending,
-        coverImage,
-        oldPrice,
-        newPrice,
-    });
-
     try {
-        const newBook = await book.save();
-        res.status(201).json(newBook);
+        const newBook = await Book({...req.body});
+        await newBook.save();
+        res.status(200).send({message: "Book posted successfully", book: newBook})
     } catch (error) {
-        res.status(500).json({ message: "Cannot create a book" });
+        console.error("Error creating book", error);
+        res.status(500).send({message: "Failed to create book"})
     }
 };
 
