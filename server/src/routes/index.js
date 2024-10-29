@@ -4,6 +4,7 @@ import userRoutes from "./userroutes.js";
 import ordersRoutes from "./ordersRoute.js";
 const router = express.Router();
 router.use("/books", bookRoutes);
-router.use("/users", userRoutes);
 router.use("/orders", ordersRoutes)
+router.use("/auth", userRoutes);
+
 export default router;
