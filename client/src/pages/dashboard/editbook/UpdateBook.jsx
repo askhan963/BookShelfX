@@ -38,7 +38,7 @@ const UpdateBook = () => {
       coverImage: data.coverImage || bookData.coverImage,
     };
     try {
-      await axios.put(`${getBaseUrl()}/api/books/edit/${id}`, updateBookData, {
+      await axios.put(`${getBaseUrl()}/api/books/${id}`, updateBookData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
