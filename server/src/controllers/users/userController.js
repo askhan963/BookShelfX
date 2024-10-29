@@ -1,20 +1,21 @@
 import userModel from "../../models/Users/userModel.js";
 import jwt from "jsonwebtoken";
-const JWT_SECRET = process.env.JWT_SECRET_KEY;
+
 const getAdmin = async (req, res) => {
   const { username, password } = req.body;
   try {
     const admin = await userModel.findOne({ username });
+
     if (!admin) {
-      res.status(404).send({ message: "Admin not found!" });
+      return res.status(404).send({ message: "Admin not found!" });
     }
     if (admin.password !== password) {
-      res.status(401).send({ message: "Invalid password!" });
+      return res.status(401).send({ message: "Invalid password!" });
     }
 
     const token = jwt.sign(
       { id: admin._id, username: admin.username, role: admin.role },
-      JWT_SECRET,
+      process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
 
