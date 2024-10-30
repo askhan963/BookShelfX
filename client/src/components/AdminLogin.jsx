@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import axios from "axios";
 import getBaseUrl from "../utils/baseURL";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +12,9 @@ const AdminLogin = () => {
     watch,
     formState: { errors },
   } = useForm();
-
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    // console.log(data)
     try {
       const response = await axios.post(
         `${getBaseUrl()}/api/auth/admin`,
@@ -29,16 +26,14 @@ const AdminLogin = () => {
         }
       );
       const auth = response.data;
-      //    console.log(auth)
       if (auth.token) {
         localStorage.setItem("token", auth.token);
         setTimeout(() => {
           localStorage.removeItem("token");
-          alert("Token has been expired!, Please login again.");
+          alert("Token has expired. Please login again.");
           navigate("/");
         }, 3600 * 1000);
       }
-
       alert("Admin Login successful!");
       navigate("/dashboard");
     } catch (error) {
@@ -46,15 +41,18 @@ const AdminLogin = () => {
       console.error(error);
     }
   };
-  return (
-    <div className="h-screen flex justify-center items-center ">
-      <div className="w-full max-w-sm mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="text-xl font-semibold mb-4">Admin Dashboard Login </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
+  return (
+    <div className="h-screen flex justify-center items-center bg-gray-100 p-4">
+      <div className="w-full max-w-md bg-slate-200 shadow-lg rounded-lg px-8 py-8">
+        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
+          Admin Dashboard Login
+        </h2>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-medium mb-1"
               htmlFor="username"
             >
               Username
@@ -62,15 +60,15 @@ const AdminLogin = () => {
             <input
               {...register("username", { required: true })}
               type="text"
-              name="username"
               id="username"
-              placeholder="username"
-              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
+              placeholder="Username"
+              className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          <div className="mb-4">
+
+          <div>
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-medium mb-1"
               htmlFor="password"
             >
               Password
@@ -78,18 +76,19 @@ const AdminLogin = () => {
             <input
               {...register("password", { required: true })}
               type="password"
-              name="password"
               id="password"
               placeholder="Password"
-              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
+              className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
+
           {message && (
-            <p className="text-red-500 text-xs italic mb-3">{message}</p>
+            <p className="text-red-500 text-sm italic text-center">{message}</p>
           )}
-          <div className="w-full">
-            <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none">
-              Login{" "}
+
+          <div>
+            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200 focus:outline-none">
+              Login
             </button>
           </div>
         </form>
