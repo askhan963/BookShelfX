@@ -3,27 +3,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 import showCase from '../assets/showcase/showcase-2.png';
 
 const SignUp = () => {
-    const [message, setMessage] = useState("");
     const { registerUser, signInWithGoogle } = useAuth();
     const navigate = useNavigate();
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password);
-            alert("User registered successfully!");
-            navigate("/");
+            Swal.fire({
+                title: "Registration Successful!",
+                text: "Your account has been created.",
+                icon: "success",
+                confirmButtonText: "Go to Dashboard",
+                confirmButtonColor: "#3085d6",
+            }).then(() => navigate("/"));
         } catch (error) {
-            setMessage("Please provide a valid email and password");
+            Swal.fire({
+                title: "Registration Failed",
+                text: "Please provide a valid email and password",
+                icon: "error",
+                confirmButtonText: "Try Again",
+                confirmButtonColor: "#d33",
+            });
             console.error(error);
         }
     };
@@ -31,10 +37,21 @@ const SignUp = () => {
     const handleGoogleSignIn = async () => {
         try {
             await signInWithGoogle();
-            alert("Login successful!");
-            navigate("/");
+            Swal.fire({
+                title: "Login Successful!",
+                text: "Welcome back!",
+                icon: "success",
+                confirmButtonText: "Go to Dashboard",
+                confirmButtonColor: "#3085d6",
+            }).then(() => navigate("/"));
         } catch (error) {
-            alert("Google sign in failed!");
+            Swal.fire({
+                title: "Google Sign-In Failed",
+                text: "Unable to sign in with Google. Please try again.",
+                icon: "error",
+                confirmButtonText: "Close",
+                confirmButtonColor: "#d33",
+            });
             console.error(error);
         }
     };
@@ -65,9 +82,6 @@ const SignUp = () => {
                             className='shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                         />
                     </div>
-                    {
-                        message && <p className='text-red-500 text-sm italic'>{message}</p>
-                    }
                     <div>
                         <button className='w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none transition duration-200'>Register</button>
                     </div>

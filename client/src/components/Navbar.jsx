@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
-
+import Swal from 'sweetalert2';
 import avatarImg from "../assets/avatar.png"
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,9 +22,31 @@ const Navbar = () => {
    
     const {currentUser, logout} = useAuth()
     
+
     const handleLogOut = () => {
-        logout()
-    }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out from your account!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log me out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logout(); // Call the logout function to log out the user
+                setIsDropdownOpen(false); // Close the dropdown if it's open
+                Swal.fire({
+                    title: 'Logged Out!',
+                    text: 'You have been successfully logged out.',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6'
+                });
+            }
+        });
+    };
+    
 
     const token = localStorage.getItem('token');
   
