@@ -1,6 +1,6 @@
 # BookShelfX 📚
 
-**BookShelfX** is a dynamic web application for managing a collection of books. Built with the MERN (MongoDB, Express.js, React, Node.js) stack, it provides a seamless experience for users to browse, add, and manage books in their library. This project uses Redux Toolkit with RTK Query for efficient state management and Tailwind CSS for a responsive and attractive UI.
+**BookShelfX** is a feature-rich online bookstore application that combines a dynamic shopping experience for users with a robust admin dashboard for managing books and orders. Built with the MERN stack, it uses Firebase for user authentication and JWT for admin authentication, ensuring secure and efficient management. Tailwind CSS adds to the application's responsiveness and aesthetic appeal, while Redux Toolkit and RTK Query power efficient data handling.
 
 > **Repository**: [GitHub - BookShelfX](https://github.com/askhan963/bookShelfX)  
 > **Live Site**: [BookShelfX on Netlify](https://bookshelfx.netlify.app/)  
@@ -19,29 +19,42 @@
 
 ## Features
 
-- **User Authentication**: Secure login and registration with email/password and Google sign-in integration.
-- **Admin Dashboard**: Admins can add, edit, or delete books and track key metrics (total sales, trending books, etc.)
-- **Dynamic Book Management**: Add, edit, delete books, with image uploads and trending book tagging.
-- **Interactive Charts**: Visualize revenue data and monthly sales in real-time using charts.
-- **Responsive Design**: Tailwind CSS ensures a smooth experience across all devices.
-- **Efficient Data Handling**: Optimized state management with Redux Toolkit and RTK Query.
+### User Features
+- **User Authentication (Firebase)**:
+  - Email/Password and Google Sign-In.
+  - Secure session management for a seamless shopping experience.
+
+- **Shopping Experience**:
+  - **Add to Cart**: Users can add multiple books to their cart.
+  - **Remove from Cart**: Easy management of items within the cart.
+  - **Checkout**: Smooth checkout process that confirms and saves orders.
+  - **Order History**: View previously placed orders with relevant details.
+
+### Admin Features
+- **Admin Authentication (JWT)**:
+  - Secure login for admin users, with access restricted to admin-only operations.
+
+- **Dashboard Management**:
+  - **Add, Update, and Delete Books**: Full CRUD operations for managing the book catalog.
+  - **Orders Overview**: Monitor and manage all placed orders.
+  - **Data Visualizations**: Interactive charts to view monthly revenue, order statistics, and trending books.
 
 ---
 
 ## Technologies
 
 - **Frontend**:
-  - **React** with **Redux Toolkit** for state management
-  - **RTK Query** for data fetching and caching
-  - **Tailwind CSS** for styling
-  - **React Hook Form** and **SweetAlert2** for forms and user feedback
+  - **React** with **Redux Toolkit** and **RTK Query** for state and data management.
+  - **Firebase Authentication** for user login and session tracking.
+  - **Tailwind CSS** for responsive and consistent styling.
+  - **React Hook Form** and **SweetAlert2** for seamless form handling and user notifications.
 
 - **Backend**:
-  - **Node.js** and **Express.js** for server-side functionality
-  - **MongoDB** for database
-  - **Multer** for image handling
-  - **JWT** for secure authentication
-  - **Vercel** for backend hosting
+  - **Node.js** and **Express.js** for handling server-side logic.
+  - **MongoDB** for a robust and scalable database.
+  - **Multer** for image upload handling.
+  - **JWT** for admin authentication, ensuring secure access control.
+  - **Vercel** for backend hosting.
 
 ---
 
@@ -50,7 +63,8 @@
 ### Prerequisites
 
 - Node.js
-- MongoDB (local or cloud-based like MongoDB Atlas)
+- MongoDB (local or MongoDB Atlas)
+- Firebase Project with Authentication enabled (Email/Password and Google providers)
 
 ### Setup Instructions
 
@@ -66,7 +80,7 @@
    ```
 
 3. **Environment Variables**
-   Create a `.env` file in the root directory for both frontend and backend configurations.
+   Create a `.env` file for backend and frontend configurations.
 
    ```bash
    # MongoDB Connection URI
@@ -75,60 +89,63 @@
    # JWT Secret Key
    JWT_SECRET_KEY=your_jwt_secret_here
 
-   # Vercel URL for backend
-   BACKEND_URL=https://your-vercel-url.vercel.app
+   # Firebase Configuration (Frontend)
+   REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+   REACT_APP_FIREBASE_PROJECT_ID=your_firebase_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_firebase_app_id
    ```
 
 4. **Run the Application**
-   ```bash
-   # Start the backend server
-   npm run server
-
-   # Start the frontend server
-   npm run client
-   ```
-
-5. **Build for Production**
-   ```bash
-   npm run build
-   ```
+   - **Frontend**: Start the React app.
+     ```bash
+     npm start
+     ```
+   - **Backend**: Start the Express server.
+     ```bash
+     npm run server
+     ```
 
 ---
 
 ## Project Structure
 
-- **Frontend** (React)
-  - `src/`
-    - `components/`: Reusable UI components
-    - `features/`: Redux slices and RTK Query logic
-    - `pages/`: Application pages (Dashboard, Login, Register, etc.)
-    - `styles/`: Tailwind CSS setup
-
-- **Backend** (Node/Express)
-  - `src/`
-    - `controllers/`: API logic for handling CRUD operations
-    - `models/`: Mongoose schemas for MongoDB
-    - `routes/`: Endpoint definitions for API routes
-    - `uploads/`: Directory for storing uploaded images
+```plaintext
+BookShelfX/
+├── client/                   # Frontend code
+│   ├── public/               # Public assets
+│   └── src/                  # Source files
+│       ├── components/       # Reusable components (e.g., Cart, Order, Book)
+│       ├── context/          # Firebase Auth context
+│       ├── redux/            # Redux state management
+│       ├── utils/            # Helper functions (e.g., getBaseUrl)
+│       └── App.js            # Main App component
+├── server/                   # Backend code
+│   ├── controllers/          # Route controllers (e.g., Books, Orders)
+│   ├── models/               # Mongoose models
+│   ├── routes/               # API routes
+│   ├── config/               # Database and middleware configurations
+│   └── index.js              # Entry point for the Express server
+└── README.md                 # Project documentation
+```
 
 ---
 
 ## Screenshots
 
-- **User Login & Registration**
-  
-- **Admin Dashboard**
-  
-- **Book Management**
-
----
-
+- **User Dashboard**: Intuitive dashboard for managing cart, orders, and profile.
+- **Admin Dashboard**: Comprehensive management interface with data visualization.
+- **Add/Edit Book**: Efficient book management interface with image upload and dynamic form validation.
 ## Contributing
 
-Feel free to fork the repository and submit pull requests. Any contributions, large or small, are highly appreciated!
 
 --- 
 
 ## License
 
 This project is licensed under the MIT License.
+---
+
+Enjoy exploring **BookShelfX**! Feel free to contribute or reach out if you encounter any issues or have suggestions.
