@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import getBaseUrl from "../utils/baseURL";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import showCase from '../assets/showcase/admin.png';
 
 const AdminLogin = () => {
   const [message, setMessage] = useState("");
@@ -30,21 +32,46 @@ const AdminLogin = () => {
         localStorage.setItem("token", auth.token);
         setTimeout(() => {
           localStorage.removeItem("token");
-          alert("Token has expired. Please login again.");
-          navigate("/");
+          Swal.fire({
+            title: "Session Expired",
+            text: "Token has expired. Please login again.",
+            icon: "info",
+            confirmButtonText: "OK",
+          }).then(() => navigate("/"));
         }, 3600 * 1000);
       }
-      alert("Admin Login successful!");
-      navigate("/dashboard");
+
+      Swal.fire({
+        title: "Login Successful!",
+        text: "Welcome to the Admin Dashboard!",
+        icon: "success",
+        confirmButtonText: "Go to Dashboard",
+      }).then(() => navigate("/dashboard"));
     } catch (error) {
       setMessage("Please provide a valid email and password");
+      Swal.fire({
+        title: "Login Failed",
+        text: "Invalid email or password. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       console.error(error);
     }
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-slate-200 shadow-lg rounded-lg px-8 py-8">
+    <div className="h-screen flex flex-col md:flex-row justify-center items-center bg-gray-100 p-4">
+      {/* Showcase Image */}
+      <div className="hidden md:block md:w-1/3 lg:w-1/2">
+        <img 
+          className="w-full h-auto object-cover transform transition duration-300 hover:scale-105 rounded-md shadow-lg" 
+          src={showCase} 
+          alt="Admin Login Showcase"
+        />
+      </div>
+
+      {/* Login Form */}
+      <div className="w-full md:w-2/3 lg:w-1/3 bg-white shadow-2xl rounded-lg p-8 mx-4">
         <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
           Admin Dashboard Login
         </h2>
